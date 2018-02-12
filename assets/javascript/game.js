@@ -4,6 +4,7 @@
    var lettersGuessed = [];
    var computerOutput;
    var userInputLetterGlobal;
+   var double = false;
     
     
     var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -35,24 +36,33 @@
 
    function checkDouble() {
     for (var i = 0; i < lettersGuessed.length; i++) {
-        for (var j = i; j < lettersGuessed.length; j++) {
+        for (var j = i+1; j < lettersGuessed.length; j++) {
             console.log("J loop");    
-            if (lettersGuessed[i] === lettersGuessed[j] && i != j) {
+            if (lettersGuessed[i] == lettersGuessed[j] && i != j) {
+                double = true; 
+                console.log("Double is now true");
                 lettersGuessed.splice(i, 1);
                 alert("You have already guessed this letter, try again.");
+             
+                }
             }
-        }; 
+        }
     };
-};  
+  
 
    function compare() {
-        if (userInputLetterGlobal === computerOutput) {
+        if (double != false) {
+            console.log("We are in the compare function where double != false");
+            double = false; //reset double
+            return; 
+        } else {
+            if (userInputLetterGlobal === computerOutput) {
             alert("Correct! You guessed it right!");
             userWins++;
             reset();
             update();
         
-        } else {
+             } else {
             alert("WRONG! Try again!");
             guesses--;
             if (guesses === 0) {
@@ -60,6 +70,7 @@
                 reset();
             };
             update();  
+            }
         }
     };
 
@@ -70,7 +81,7 @@ document.onkeyup = function(event) {
     var userInputLetter = String.fromCharCode(event.which).toLowerCase();
     userInputLetterGlobal = userInputLetter;
     // pushes userInputLetter into the array lettersGuessed
-    lettersGuessed.push(userInputLetter);
+    lettersGuessed.push(userInputLetterGlobal);
     checkDouble();
     compare();
 };
