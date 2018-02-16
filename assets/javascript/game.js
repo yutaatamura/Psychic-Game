@@ -44,9 +44,9 @@
                 lettersGuessed.splice(i, 1);
                 alert("You have already guessed this letter, try again.");
              
-                }
             }
         }
+    }
     };
   
 
